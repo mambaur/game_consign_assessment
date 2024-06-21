@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:game_consign_assessment/features/reminders/bloc/reminder_bloc/reminder_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
@@ -25,12 +27,10 @@ void main() async {
     frequency: const Duration(minutes: 1),
   );
 
-  runApp(const App());
-
-  // runApp(MultiBlocProvider(
-  //   providers: BlocSetting.providers(),
-  //   child: const App(),
-  // ));
+  runApp(BlocProvider(
+    create: (context) => ReminderBloc(),
+    child: const App(),
+  ));
 }
 
 @pragma('vm:entry-point')
