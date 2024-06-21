@@ -19,6 +19,8 @@ dependencies:
   loading_animation_widget: ^1.2.1
   overlay_loading_progress: ^1.0.1
   cupertino_icons: ^1.0.6
+  workmanager: ^0.5.2
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:
