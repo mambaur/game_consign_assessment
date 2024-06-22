@@ -12,7 +12,7 @@ class UpdateReminder
 
   @override
   Future<Result<Response>> call(Map<String, dynamic> params) async {
-    var result = await _repository.insert(params);
+    var result = await _repository.update(params);
 
     return result;
   }
