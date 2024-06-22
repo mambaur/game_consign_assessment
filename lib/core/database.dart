@@ -15,6 +15,9 @@ class DatabaseInstance {
   final String reminderTitle = 'title';
   final String reminderDescription = 'description';
   final String reminderTime = 'time';
+  final String reminderType = 'type'; // location || time
+  final String reminderLatitude = 'latitude';
+  final String reminderLongitude = 'longitude';
   final String reminderIsActive = 'is_active';
   final String reminderCreatedAt = 'created_at';
   final String reminderUpdatedAt = 'updated_at';
@@ -36,6 +39,12 @@ class DatabaseInstance {
         version: _databaseVersion, onCreate: _onCreate);
   }
 
+  removeDatabase() async {
+    final documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, _databaseName);
+    await deleteDatabase(path);
+  }
+
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
     await db.execute('''
@@ -43,6 +52,9 @@ class DatabaseInstance {
             $reminderId INTEGER PRIMARY KEY AUTOINCREMENT,
             $reminderTitle TEXT NULL,
             $reminderDescription TEXT NULL,
+            $reminderLatitude REAL NULL,
+            $reminderLongitude REAL NULL,
+            $reminderType TEXT NULL,
             $reminderTime TEXT NULL,
             $reminderIsActive INTEGER NULL,
             $reminderCreatedAt TEXT NULL,

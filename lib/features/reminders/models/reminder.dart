@@ -9,6 +9,9 @@ class Reminder {
   String? title;
   String? description;
   String? time;
+  String? type;
+  double? latitude;
+  double? longitude;
   int? isActive;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -18,6 +21,9 @@ class Reminder {
     this.title,
     this.description,
     this.time,
+    this.type,
+    this.latitude,
+    this.longitude,
     this.isActive,
     this.createdAt,
     this.updatedAt,
@@ -28,6 +34,9 @@ class Reminder {
         title: json["title"],
         description: json["description"],
         time: json["time"],
+        type: json["type"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
         isActive: json["is_active"],
         createdAt: json["created_at"] == null
             ? null
@@ -41,7 +50,10 @@ class Reminder {
         "id": id,
         "title": title,
         "description": description,
-        "time": time,
+        "time": time ?? '00:01',
+        "type": type,
+        "latitude": latitude,
+        "longitude": longitude,
         "is_active": isActive,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),

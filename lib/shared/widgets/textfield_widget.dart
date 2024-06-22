@@ -8,6 +8,7 @@ class TextFieldWidget extends StatelessWidget {
   final bool obscureText;
   final int? minLines;
   final int? maxLines;
+  final bool enabled;
   final Widget? suffixIcon;
   final Color? color;
   const TextFieldWidget(
@@ -16,6 +17,7 @@ class TextFieldWidget extends StatelessWidget {
       this.label,
       this.minLines,
       this.maxLines = 1,
+      this.enabled = true,
       this.validator,
       this.suffixIcon,
       this.color,
@@ -41,6 +43,7 @@ class TextFieldWidget extends StatelessWidget {
         TextFormField(
           controller: controller,
           obscureText: obscureText,
+          enabled: enabled,
           validator: validator ??
               (value) {
                 if (value == '' && required) {
@@ -57,6 +60,7 @@ class TextFieldWidget extends StatelessWidget {
               focusedBorder: inputBorder,
               errorBorder: inputBorder,
               focusedErrorBorder: inputBorder,
+              disabledBorder: inputBorder,
               enabledBorder: inputBorder),
         ),
       ],

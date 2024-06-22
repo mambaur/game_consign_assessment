@@ -40,6 +40,16 @@ class ReminderRepository {
             time: data[i]['time'] == null || data[i]['time'] == ''
                 ? null
                 : data[i]['time'].toString(),
+            type: data[i]['type'] == null || data[i]['type'] == ''
+                ? null
+                : data[i]['type'].toString(),
+            latitude: data[i]['latitude'] == null || data[i]['latitude'] == ''
+                ? null
+                : double.parse(data[i]['latitude'].toString()),
+            longitude:
+                data[i]['longitude'] == null || data[i]['longitude'] == ''
+                    ? null
+                    : double.parse(data[i]['longitude'].toString()),
             createdAt:
                 data[i]['created_at'] == null || data[i]['created_at'] == ''
                     ? null
@@ -123,10 +133,10 @@ class ReminderRepository {
 
   Future<void> storeWorkManager(int id) async {
     Result<Reminder?> result = await find(id);
-    if (result.isSuccess) {
+    if (result.isSuccess && result.resultValue?.isActive == 1) {
       DateTime now = DateTime.now();
       DateTime parsedTime =
-          DateFormat('HH:mm').parse(result.resultValue!.time!);
+          DateFormat('HH:mm').parse(result.resultValue?.time ?? "00:01");
       DateTime time = DateTime(
           now.year, now.month, now.day, parsedTime.hour, parsedTime.minute);
 
@@ -136,8 +146,12 @@ class ReminderRepository {
 
       Workmanager().registerPeriodicTask(
           id.toString(), result.resultValue!.id.toString(),
-          initialDelay: time.difference(now),
-          frequency: const Duration(days: 1),
+          initialDelay: result.resultValue?.type == 'LOCATION'
+              ? const Duration(seconds: 1)
+              : time.difference(now),
+          frequency: result.resultValue?.type == 'LOCATION'
+              ? const Duration(minutes: 15)
+              : const Duration(days: 1),
           inputData: result.resultValue?.toJson());
     }
   }
@@ -146,10 +160,10 @@ class ReminderRepository {
     Workmanager().cancelByUniqueName(id.toString());
 
     Result<Reminder?> result = await find(id);
-    if (result.isSuccess) {
+    if (result.isSuccess && result.resultValue?.isActive == 1) {
       DateTime now = DateTime.now();
       DateTime parsedTime =
-          DateFormat('HH:mm').parse(result.resultValue!.time!);
+          DateFormat('HH:mm').parse(result.resultValue?.time ?? "00:01");
       DateTime time = DateTime(
           now.year, now.month, now.day, parsedTime.hour, parsedTime.minute);
 
@@ -159,8 +173,12 @@ class ReminderRepository {
 
       Workmanager().registerPeriodicTask(
           id.toString(), result.resultValue!.id.toString(),
-          initialDelay: time.difference(now),
-          frequency: const Duration(days: 1),
+          initialDelay: result.resultValue?.type == 'LOCATION'
+              ? const Duration(seconds: 1)
+              : time.difference(now),
+          frequency: result.resultValue?.type == 'LOCATION'
+              ? const Duration(minutes: 15)
+              : const Duration(days: 1),
           inputData: result.resultValue?.toJson());
     }
   }

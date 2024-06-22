@@ -68,7 +68,7 @@ class _ReminderPageState extends State<ReminderPage> {
                     showCancelButton: false,
                     title: "Information",
                     description:
-                        "Please enable notification permissions and disable battery optimization, do you understand?"),
+                        "Please enable notification permission, location permissions and disable battery optimization, do you understand?"),
                 icon: const Icon(Icons.info_outline)),
             IconButton(
                 onPressed: () => SimpleAlert.show(
@@ -182,7 +182,9 @@ class _ReminderPageState extends State<ReminderPage> {
                                   ),
                                 ),
                                 Text(
-                                  item.time ?? '',
+                                  item.type == 'LOCATION'
+                                      ? 'Location'
+                                      : (item.time ?? ''),
                                   textAlign: TextAlign.end,
                                   style: const TextStyle(
                                     color: Colors.white,

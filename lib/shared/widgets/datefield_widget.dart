@@ -48,6 +48,8 @@ class DateFieldWidget extends StatelessWidget {
           onChanged: onChanged,
           style: TextStyle(color: color ?? Colors.white, fontSize: 18),
           decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 18, horizontal: 15),
               isDense: true,
               suffixIconColor: color ?? Colors.white,
               suffixIcon: suffixIcon,
